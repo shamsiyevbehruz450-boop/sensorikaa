@@ -807,10 +807,404 @@ footer {
   .footer-inner { grid-template-columns: 1fr; gap: 30px; }
   .howto-steps { grid-template-columns: 1fr; }
 }
+/* =============================================
+   ADMIN PANEL STYLES
+============================================= */
+.admin-trigger {
+  position: fixed; bottom: 28px; right: 28px; z-index: 8888;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: linear-gradient(135deg, #5d5df5, #7676f8);
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 8px 24px rgba(93,93,245,0.5);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.admin-trigger:hover { transform: scale(1.1); box-shadow: 0 12px 32px rgba(93,93,245,0.65); }
+.admin-trigger .material-icons { color: #fff; font-size: 24px; }
+
+.admin-login-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9990;
+  background: rgba(5,7,20,0.92); backdrop-filter: blur(12px);
+  align-items: center; justify-content: center;
+}
+.admin-login-overlay.open { display: flex; }
+.admin-login-box {
+  background: #0f1228; border: 1px solid rgba(93,93,245,0.3);
+  border-radius: 20px; padding: 44px 40px 36px;
+  width: 400px; max-width: 95vw;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.7);
+  animation: mIn 0.25s ease;
+}
+.admin-login-logo { text-align: center; margin-bottom: 26px; }
+.admin-login-logo .material-icons { font-size: 48px; color: #7676f8; background: rgba(93,93,245,0.12); border-radius: 50%; padding: 14px; display: inline-flex; }
+.admin-login-title { font-size: 20px; font-weight: 800; color: #e2e8ff; text-align: center; margin-bottom: 6px; }
+.admin-login-sub { font-size: 13px; color: rgba(200,210,255,0.5); text-align: center; margin-bottom: 28px; }
+.admin-field { margin-bottom: 16px; }
+.admin-field label { display: block; font-size: 12px; font-weight: 700; color: rgba(200,210,255,0.6); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.admin-input { width: 100%; padding: 13px 16px; background: rgba(93,93,245,0.07); border: 1px solid rgba(93,93,245,0.25); border-radius: 10px; color: #e2e8ff; font-size: 15px; font-family: 'Exo 2', sans-serif; outline: none; transition: border-color 0.2s; }
+.admin-input:focus { border-color: #7676f8; }
+.admin-input::placeholder { color: rgba(200,210,255,0.3); }
+.admin-login-error { font-size: 13px; color: #ff6b6b; text-align: center; margin-bottom: 14px; display: none; }
+.admin-login-error.show { display: block; }
+.admin-login-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #5d5df5, #7676f8); border: none; border-radius: 10px; color: #fff; font-size: 15px; font-weight: 700; cursor: pointer; font-family: 'Exo 2', sans-serif; transition: opacity 0.2s; margin-top: 6px; }
+.admin-login-btn:hover { opacity: 0.88; }
+.admin-cancel-btn { width: 100%; padding: 12px; margin-top: 10px; background: transparent; border: 1px solid rgba(93,93,245,0.25); border-radius: 10px; color: rgba(200,210,255,0.6); font-size: 14px; font-weight: 600; cursor: pointer; font-family: 'Exo 2', sans-serif; transition: border-color 0.2s, color 0.2s; }
+.admin-cancel-btn:hover { border-color: #7676f8; color: #e2e8ff; }
+
+.admin-panel { display: none; position: fixed; inset: 0; z-index: 9900; }
+.admin-panel.open { display: flex; }
+.admin-sidebar { width: 270px; height: 100vh; background: #090b1c; border-right: 1px solid rgba(93,93,245,0.2); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
+.admin-sidebar-head { padding: 22px 20px 18px; border-bottom: 1px solid rgba(93,93,245,0.15); display: flex; align-items: center; justify-content: space-between; }
+.admin-sidebar-logo { display: flex; align-items: center; gap: 10px; }
+.admin-sidebar-logo .material-icons { color: #7676f8; font-size: 24px; }
+.admin-sidebar-logo span { font-size: 14px; font-weight: 800; color: #e2e8ff; }
+.admin-close-btn { background: none; border: none; cursor: pointer; color: rgba(200,210,255,0.4); font-size: 22px; line-height: 1; transition: color 0.2s; }
+.admin-close-btn:hover { color: #ff6b6b; }
+.admin-nav { flex: 1; padding: 12px 10px; overflow-y: auto; }
+.admin-nav-section { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: rgba(200,210,255,0.3); padding: 10px 10px 6px; }
+.admin-nav-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 10px; color: rgba(200,210,255,0.6); font-size: 13.5px; font-weight: 600; cursor: pointer; transition: background 0.2s, color 0.2s; margin-bottom: 2px; }
+.admin-nav-item:hover { background: rgba(93,93,245,0.1); color: #e2e8ff; }
+.admin-nav-item.active { background: rgba(93,93,245,0.18); color: #7676f8; }
+.admin-nav-item .material-icons { font-size: 20px; }
+.admin-sidebar-foot { padding: 12px 10px; border-top: 1px solid rgba(93,93,245,0.15); }
+.admin-logout-btn { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; border-radius: 10px; background: none; border: none; cursor: pointer; color: rgba(200,210,255,0.5); font-size: 13.5px; font-weight: 600; font-family: 'Exo 2', sans-serif; transition: background 0.2s, color 0.2s; }
+.admin-logout-btn:hover { background: rgba(255,80,80,0.1); color: #ff6b6b; }
+.admin-logout-btn .material-icons { font-size: 20px; }
+
+.admin-main { flex: 1; height: 100vh; overflow-y: auto; background: #0b0d1a; }
+.admin-topbar { display: flex; align-items: center; justify-content: space-between; padding: 18px 28px; border-bottom: 1px solid rgba(93,93,245,0.12); background: #090b1c; position: sticky; top: 0; z-index: 10; }
+.admin-topbar-title { font-size: 18px; font-weight: 800; color: #e2e8ff; }
+.admin-user { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(200,210,255,0.6); }
+.admin-user .material-icons { font-size: 30px; color: #7676f8; background: rgba(93,93,245,0.12); border-radius: 50%; padding: 3px; }
+.admin-content { padding: 24px 28px 60px; }
+
+.admin-stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 18px; margin-bottom: 28px; }
+.admin-stat-card { background: #0f1228; border: 1px solid rgba(93,93,245,0.15); border-radius: 14px; padding: 20px 18px; display: flex; align-items: center; gap: 14px; }
+.admin-stat-icon { width: 46px; height: 46px; border-radius: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.admin-stat-icon .material-icons { font-size: 24px; color: #fff; }
+.admin-stat-icon.blue { background: linear-gradient(135deg,#5d5df5,#7676f8); }
+.admin-stat-icon.green { background: linear-gradient(135deg,#10b981,#3df5a0); }
+.admin-stat-icon.orange { background: linear-gradient(135deg,#f59e0b,#fbbf24); }
+.admin-stat-icon.red { background: linear-gradient(135deg,#ef4444,#f87171); }
+.admin-stat-num { font-size: 24px; font-weight: 900; color: #e2e8ff; line-height: 1; }
+.admin-stat-label { font-size: 12px; color: rgba(200,210,255,0.5); margin-top: 4px; }
+.admin-stat-change { font-size: 12px; font-weight: 700; margin-top: 5px; }
+.admin-stat-change.up { color: #3df5a0; }
+.admin-stat-change.down { color: #ff6b6b; }
+
+.admin-card { background: #0f1228; border: 1px solid rgba(93,93,245,0.15); border-radius: 14px; margin-bottom: 22px; overflow: hidden; }
+.admin-card-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid rgba(93,93,245,0.1); }
+.admin-card-title { font-size: 14px; font-weight: 800; color: #e2e8ff; }
+.admin-add-btn { display: flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 8px; background: linear-gradient(135deg,#5d5df5,#7676f8); border: none; color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; font-family: 'Exo 2', sans-serif; transition: opacity 0.2s; }
+.admin-add-btn:hover { opacity: 0.85; }
+.admin-add-btn .material-icons { font-size: 17px; }
+
+.admin-table { width: 100%; border-collapse: collapse; }
+.admin-table th { padding: 11px 16px; text-align: left; font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(200,210,255,0.4); border-bottom: 1px solid rgba(93,93,245,0.1); }
+.admin-table td { padding: 13px 16px; font-size: 13.5px; color: rgba(200,210,255,0.8); border-bottom: 1px solid rgba(93,93,245,0.07); vertical-align: middle; }
+.admin-table tr:last-child td { border-bottom: none; }
+.admin-table tr:hover td { background: rgba(93,93,245,0.04); }
+.admin-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+.admin-badge.active { background: rgba(61,245,160,0.12); color: #3df5a0; }
+.admin-badge.pending { background: rgba(251,191,36,0.12); color: #fbbf24; }
+.admin-badge.inactive { background: rgba(255,107,107,0.12); color: #ff6b6b; }
+.admin-action-btns { display: flex; gap: 7px; }
+.admin-action-btn { padding: 5px 11px; border-radius: 7px; font-size: 12px; font-weight: 700; cursor: pointer; font-family: 'Exo 2', sans-serif; border: none; transition: opacity 0.2s; }
+.admin-action-btn.edit { background: rgba(93,93,245,0.15); color: #7676f8; }
+.admin-action-btn.del { background: rgba(255,107,107,0.12); color: #ff6b6b; }
+.admin-action-btn:hover { opacity: 0.75; }
+
+.admin-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; padding: 20px; }
+.admin-form-group { display: flex; flex-direction: column; gap: 7px; }
+.admin-form-group.full { grid-column: 1/-1; }
+.admin-form-label { font-size: 11px; font-weight: 700; color: rgba(200,210,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+.admin-form-input { padding: 11px 13px; background: rgba(93,93,245,0.07); border: 1px solid rgba(93,93,245,0.2); border-radius: 9px; color: #e2e8ff; font-size: 14px; font-family: 'Exo 2', sans-serif; outline: none; transition: border-color 0.2s; }
+.admin-form-input:focus { border-color: #7676f8; }
+.admin-form-textarea { min-height: 90px; resize: vertical; }
+.admin-save-btn { margin: 0 20px 20px; padding: 12px 26px; background: linear-gradient(135deg,#5d5df5,#7676f8); border: none; border-radius: 10px; color: #fff; font-size: 14px; font-weight: 700; cursor: pointer; font-family: 'Exo 2', sans-serif; transition: opacity 0.2s; }
+.admin-save-btn:hover { opacity: 0.88; }
+
+.admin-page { display: none; }
+.admin-page.active { display: block; }
+
+.admin-chart-wrap { padding: 20px; display: flex; align-items: flex-end; gap: 8px; height: 170px; }
+.admin-bar { flex: 1; border-radius: 5px 5px 0 0; background: linear-gradient(180deg,#7676f8,#5d5df5); opacity: 0.75; transition: opacity 0.2s; cursor: pointer; position: relative; }
+.admin-bar:hover { opacity: 1; }
+.admin-bar-label { position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); font-size: 10px; color: rgba(200,210,255,0.4); white-space: nowrap; }
+
+.admin-toast { position: fixed; bottom: 90px; right: 28px; z-index: 9999; background: #1a1e3a; border: 1px solid rgba(93,93,245,0.3); border-radius: 12px; padding: 13px 18px; display: flex; align-items: center; gap: 10px; box-shadow: 0 12px 36px rgba(0,0,0,0.5); transform: translateY(20px); opacity: 0; transition: transform 0.3s, opacity 0.3s; pointer-events: none; min-width: 240px; }
+.admin-toast.show { transform: translateY(0); opacity: 1; }
+.admin-toast .material-icons { color: #3df5a0; font-size: 20px; }
+.admin-toast-text { font-size: 14px; color: #e2e8ff; font-weight: 600; }
 </style>
 </head>
 <body>
+<!-- ADMIN TRIGGER -->
+<button class="admin-trigger" onclick="openAdminLogin()" title="Admin Panel">
+  <span class="material-icons">admin_panel_settings</span>
+</button>
 
+<!-- ADMIN TOAST -->
+<div class="admin-toast" id="adminToast">
+  <span class="material-icons">check_circle</span>
+  <span class="admin-toast-text" id="adminToastText">Saqlandi!</span>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="admin-login-overlay" id="adminLoginOverlay" onclick="closeAdminLoginOut(event)">
+  <div class="admin-login-box">
+    <div class="admin-login-logo"><span class="material-icons">shield</span></div>
+    <div class="admin-login-title">Admin Panel</div>
+    <div class="admin-login-sub">Kirish uchun login va parolni kiriting</div>
+    <div class="admin-field">
+      <label>Login</label>
+      <input type="text" class="admin-input" id="adminUser" placeholder="admin" autocomplete="off"/>
+    </div>
+    <div class="admin-field">
+      <label>Parol</label>
+      <input type="password" class="admin-input" id="adminPass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doAdminLogin()"/>
+    </div>
+    <div class="admin-login-error" id="adminErr">Login yoki parol noto'g'ri!</div>
+    <button class="admin-login-btn" onclick="doAdminLogin()">Kirish</button>
+    <button class="admin-cancel-btn" onclick="closeAdminLogin()">Bekor qilish</button>
+  </div>
+</div>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-sidebar">
+    <div class="admin-sidebar-head">
+      <div class="admin-sidebar-logo">
+        <span class="material-icons">admin_panel_settings</span>
+        <span>SENSORIKA Admin</span>
+      </div>
+      <button class="admin-close-btn" onclick="closeAdminPanel()">×</button>
+    </div>
+    <nav class="admin-nav">
+      <div class="admin-nav-section">Asosiy</div>
+      <div class="admin-nav-item active" onclick="showPage('dashboard',this)"><span class="material-icons">dashboard</span> Dashboard</div>
+      <div class="admin-nav-item" onclick="showPage('students',this)"><span class="material-icons">school</span> O'quvchilar</div>
+      <div class="admin-nav-item" onclick="showPage('courses',this)"><span class="material-icons">menu_book</span> Kurslar</div>
+      <div class="admin-nav-item" onclick="showPage('messages',this)">
+        <span class="material-icons">forum</span> Xabarlar
+        <span style="margin-left:auto;background:#ef4444;color:#fff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:20px;">5</span>
+      </div>
+      <div class="admin-nav-section" style="margin-top:10px;">Kontent</div>
+      <div class="admin-nav-item" onclick="showPage('news',this)"><span class="material-icons">newspaper</span> Yangiliklar</div>
+      <div class="admin-nav-item" onclick="showPage('team',this)"><span class="material-icons">groups</span> Jamoa</div>
+      <div class="admin-nav-item" onclick="showPage('branches',this)"><span class="material-icons">location_on</span> Filiallar</div>
+      <div class="admin-nav-item" onclick="showPage('reviews',this)"><span class="material-icons">star</span> Fikrlar</div>
+      <div class="admin-nav-section" style="margin-top:10px;">Tizim</div>
+      <div class="admin-nav-item" onclick="showPage('settings',this)"><span class="material-icons">settings</span> Sozlamalar</div>
+      <div class="admin-nav-item" onclick="showPage('seo',this)"><span class="material-icons">search</span> SEO</div>
+    </nav>
+    <div class="admin-sidebar-foot">
+      <button class="admin-logout-btn" onclick="adminLogout()">
+        <span class="material-icons">logout</span> Chiqish
+      </button>
+    </div>
+  </div>
+
+  <div class="admin-main">
+    <div class="admin-topbar">
+      <div class="admin-topbar-title" id="adminPageTitle">Dashboard</div>
+      <div class="admin-user">
+        <span class="material-icons">account_circle</span>
+        <span>Administrator</span>
+      </div>
+    </div>
+    <div class="admin-content">
+
+      <!-- DASHBOARD -->
+      <div class="admin-page active" id="page-dashboard">
+        <div class="admin-stats-grid">
+          <div class="admin-stat-card"><div class="admin-stat-icon blue"><span class="material-icons">school</span></div><div><div class="admin-stat-num">1,248</div><div class="admin-stat-label">Jami o'quvchilar</div><div class="admin-stat-change up">↑ 12% bu oy</div></div></div>
+          <div class="admin-stat-card"><div class="admin-stat-icon green"><span class="material-icons">menu_book</span></div><div><div class="admin-stat-num">24</div><div class="admin-stat-label">Faol kurslar</div><div class="admin-stat-change up">↑ 3 yangi</div></div></div>
+          <div class="admin-stat-card"><div class="admin-stat-icon orange"><span class="material-icons">payments</span></div><div><div class="admin-stat-num">86.4M</div><div class="admin-stat-label">Daromad (UZS)</div><div class="admin-stat-change up">↑ 8% o'sish</div></div></div>
+          <div class="admin-stat-card"><div class="admin-stat-icon red"><span class="material-icons">forum</span></div><div><div class="admin-stat-num">5</div><div class="admin-stat-label">Yangi xabarlar</div><div class="admin-stat-change down">Javob kutmoqda</div></div></div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-head"><div class="admin-card-title">Oylik statistika</div></div>
+          <div class="admin-chart-wrap">
+            <div class="admin-bar" style="height:60%"><span class="admin-bar-label">Yan</span></div>
+            <div class="admin-bar" style="height:45%"><span class="admin-bar-label">Fev</span></div>
+            <div class="admin-bar" style="height:70%"><span class="admin-bar-label">Mar</span></div>
+            <div class="admin-bar" style="height:55%"><span class="admin-bar-label">Apr</span></div>
+            <div class="admin-bar" style="height:80%"><span class="admin-bar-label">May</span></div>
+            <div class="admin-bar" style="height:65%"><span class="admin-bar-label">Iyn</span></div>
+            <div class="admin-bar" style="height:90%"><span class="admin-bar-label">Iyl</span></div>
+            <div class="admin-bar" style="height:75%"><span class="admin-bar-label">Avg</span></div>
+            <div class="admin-bar" style="height:85%"><span class="admin-bar-label">Sen</span></div>
+            <div class="admin-bar" style="height:95%"><span class="admin-bar-label">Okt</span></div>
+            <div class="admin-bar" style="height:88%"><span class="admin-bar-label">Noy</span></div>
+            <div class="admin-bar" style="height:100%"><span class="admin-bar-label">Dek</span></div>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-head"><div class="admin-card-title">So'nggi o'quvchilar</div></div>
+          <table class="admin-table">
+            <thead><tr><th>Ism</th><th>Kurs</th><th>Sana</th><th>Holat</th></tr></thead>
+            <tbody>
+              <tr><td>Alisher Karimov</td><td>ChatGPT</td><td>15.03.2025</td><td><span class="admin-badge active">Faol</span></td></tr>
+              <tr><td>Malika Yusupova</td><td>Python</td><td>14.03.2025</td><td><span class="admin-badge active">Faol</span></td></tr>
+              <tr><td>Bobur Toshmatov</td><td>Front-End</td><td>13.03.2025</td><td><span class="admin-badge pending">Kutmoqda</span></td></tr>
+              <tr><td>Zulfiya Rahimova</td><td>SMM</td><td>12.03.2025</td><td><span class="admin-badge active">Faol</span></td></tr>
+              <tr><td>Sardor Ergashev</td><td>Neyrotarmoqlar</td><td>11.03.2025</td><td><span class="admin-badge inactive">Nofaol</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- O'QUVCHILAR -->
+      <div class="admin-page" id="page-students">
+        <div class="admin-card">
+          <div class="admin-card-head"><div class="admin-card-title">Barcha o'quvchilar</div><button class="admin-add-btn" onclick="showToast('Yangi o\'quvchi qo\'shildi!')"><span class="material-icons">add</span> Yangi qo'shish</button></div>
+          <table class="admin-table">
+            <thead><tr><th>ID</th><th>Ism Familiya</th><th>Telefon</th><th>Kurs</th><th>Sana</th><th>Holat</th><th>Amallar</th></tr></thead>
+            <tbody>
+              <tr><td>#001</td><td>Alisher Karimov</td><td>+998901234567</td><td>ChatGPT</td><td>15.03.2025</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>#002</td><td>Malika Yusupova</td><td>+998901234568</td><td>Python</td><td>14.03.2025</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>#003</td><td>Bobur Toshmatov</td><td>+998901234569</td><td>Front-End</td><td>13.03.2025</td><td><span class="admin-badge pending">Kutmoqda</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>#004</td><td>Zulfiya Rahimova</td><td>+998901234570</td><td>SMM</td><td>12.03.2025</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>#005</td><td>Sardor Ergashev</td><td>+998901234571</td><td>Neyrotarmoqlar</td><td>11.03.2025</td><td><span class="admin-badge inactive">Nofaol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>#006</td><td>Nodira Xolmatova</td><td>+998901234572</td><td>Data Science</td><td>10.03.2025</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- KURSLAR -->
+      <div class="admin-page" id="page-courses">
+        <div class="admin-card">
+          <div class="admin-card-head"><div class="admin-card-title">Barcha kurslar</div><button class="admin-add-btn" onclick="showToast('Yangi kurs qo\'shildi!')"><span class="material-icons">add</span> Yangi kurs</button></div>
+          <table class="admin-table">
+            <thead><tr><th>Kurs nomi</th><th>Narxi</th><th>O'quvchilar</th><th>Davomiyligi</th><th>Holat</th><th>Amallar</th></tr></thead>
+            <tbody>
+              <tr><td>ChatGPT Asoslari</td><td>Bepul</td><td>486</td><td>30 kun</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>ChatGPT Pro</td><td>300 000 UZS</td><td>312</td><td>30 kun</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>Neyrotarmoqlar</td><td>900 000 UZS</td><td>198</td><td>30 kun</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>Python Dasturlash</td><td>500 000 UZS</td><td>145</td><td>60 kun</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>Front-End Dasturlash</td><td>600 000 UZS</td><td>107</td><td>90 kun</td><td><span class="admin-badge pending">Kutmoqda</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- XABARLAR -->
+      <div class="admin-page" id="page-messages">
+        <div class="admin-card">
+          <div class="admin-card-head"><div class="admin-card-title">Kiruvchi xabarlar</div></div>
+          <table class="admin-table">
+            <thead><tr><th>Ism</th><th>Telefon</th><th>Xabar</th><th>Vaqt</th><th>Holat</th><th>Amallar</th></tr></thead>
+            <tbody>
+              <tr><td>Jasur Mirzayev</td><td>+998901112233</td><td>Kurs haqida ma'lumot olmoqchiman</td><td>10 min oldin</td><td><span class="admin-badge pending">Yangi</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Javob yuborildi!')">Javob berish</button></div></td></tr>
+              <tr><td>Gulnora Tursunova</td><td>+998902223344</td><td>To'lov qilishda muammo bor</td><td>25 min oldin</td><td><span class="admin-badge pending">Yangi</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Javob yuborildi!')">Javob berish</button></div></td></tr>
+              <tr><td>Sherzod Nazarov</td><td>+998903334455</td><td>Sertifikat olishim mumkinmi?</td><td>1 soat oldin</td><td><span class="admin-badge pending">Yangi</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Javob yuborildi!')">Javob berish</button></div></td></tr>
+              <tr><td>Dilnoza Umarova</td><td>+998904445566</td><td>Guruh jadvali qachon chiqadi?</td><td>2 soat oldin</td><td><span class="admin-badge active">Javob berildi</span></td><td><div class="admin-action-btns"><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>Akbar Xoliqov</td><td>+998905556677</td><td>Online darslar qachon boshlanadi?</td><td>3 soat oldin</td><td><span class="admin-badge active">Javob berildi</span></td><td><div class="admin-action-btns"><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- YANGILIKLAR -->
+      <div class="admin-page" id="page-news">
+        <div class="admin-card">
+          <div class="admin-card-head"><div class="admin-card-title">Yangiliklar boshqaruvi</div><button class="admin-add-btn" onclick="showToast('Yangi xabar qo\'shildi!')"><span class="material-icons">add</span> Yangi xabar</button></div>
+          <table class="admin-table">
+            <thead><tr><th>Sarlavha</th><th>Muallif</th><th>Sana</th><th>Ko'rishlar</th><th>Holat</th><th>Amallar</th></tr></thead>
+            <tbody>
+              <tr><td>Sensorika yangi kurslar ochdi</td><td>Admin</td><td>15.03.2025</td><td>1,240</td><td><span class="admin-badge active">Chop etilgan</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>ChatGPT 5 yangilandi</td><td>Admin</td><td>12.03.2025</td><td>3,580</td><td><span class="admin-badge active">Chop etilgan</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>IT-Park hamkorligi boshlandi</td><td>Admin</td><td>08.03.2025</td><td>892</td><td><span class="admin-badge pending">Qoralama</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- JAMOA -->
+      <div class="admin-page" id="page-team">
+        <div class="admin-card">
+          <div class="admin-card-head"><div class="admin-card-title">Jamoa a'zolari</div><button class="admin-add-btn" onclick="showToast('Yangi a\'zo qo\'shildi!')"><span class="material-icons">add</span> A'zo qo'shish</button></div>
+          <table class="admin-table">
+            <thead><tr><th>Ism</th><th>Lavozim</th><th>Tajriba</th><th>Holat</th><th>Amallar</th></tr></thead>
+            <tbody>
+              <tr><td>Norbek Arziyev</td><td>Bosh direktor</td><td>16 yil</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button></div></td></tr>
+              <tr><td>Bekzod Alimov</td><td>AI Direktor</td><td>20 yil</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button></div></td></tr>
+              <tr><td>Bunyod Hayitov</td><td>AI Spiker</td><td>8 yil</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button></div></td></tr>
+              <tr><td>Ozodbek Yusupov</td><td>O'qituvchi</td><td>5 yil</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FILIALLAR -->
+      <div class="admin-page" id="page-branches">
+        <div class="admin-card">
+          <div class="admin-card-head"><div class="admin-card-title">Filiallar boshqaruvi</div><button class="admin-add-btn" onclick="showToast('Yangi filial qo\'shildi!')"><span class="material-icons">add</span> Filial qo'shish</button></div>
+          <table class="admin-table">
+            <thead><tr><th>Filial nomi</th><th>Manzil</th><th>O'quvchilar</th><th>Holat</th><th>Amallar</th></tr></thead>
+            <tbody>
+              <tr><td>Toshkent – NestOne</td><td>Toshkent, NestOne, 2-qavat</td><td>820</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button></div></td></tr>
+              <tr><td>Navoiy – I.Karimov-90</td><td>Navoiy, I.Karimov ko'chasi, 90</td><td>428</td><td><span class="admin-badge active">Faol</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button></div></td></tr>
+              <tr><td>Dubai – Soon</td><td>Dubai, UAE</td><td>0</td><td><span class="admin-badge pending">Tez orada</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button></div></td></tr>
+              <tr><td>London – Soon</td><td>London, UK</td><td>0</td><td><span class="admin-badge pending">Tez orada</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button></div></td></tr>
+              <tr><td>California – Soon</td><td>California, USA</td><td>0</td><td><span class="admin-badge pending">Tez orada</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tahrirlash ochildi')">Tahrirlash</button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- FIKRLAR -->
+      <div class="admin-page" id="page-reviews">
+        <div class="admin-card">
+          <div class="admin-card-head"><div class="admin-card-title">Foydalanuvchi fikrlari</div></div>
+          <table class="admin-table">
+            <thead><tr><th>Ism</th><th>Kurs</th><th>Baho</th><th>Fikr</th><th>Sana</th><th>Holat</th><th>Amallar</th></tr></thead>
+            <tbody>
+              <tr><td>Jasur M.</td><td>ChatGPT</td><td>⭐⭐⭐⭐⭐</td><td>Juda yaxshi kurs!</td><td>14.03.2025</td><td><span class="admin-badge active">Tasdiqlangan</span></td><td><div class="admin-action-btns"><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>Malika T.</td><td>Python</td><td>⭐⭐⭐⭐</td><td>Yaxshi tushuntirishlar</td><td>13.03.2025</td><td><span class="admin-badge active">Tasdiqlangan</span></td><td><div class="admin-action-btns"><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+              <tr><td>Bobur N.</td><td>SMM</td><td>⭐⭐⭐⭐⭐</td><td>Professional darajada!</td><td>12.03.2025</td><td><span class="admin-badge pending">Kutmoqda</span></td><td><div class="admin-action-btns"><button class="admin-action-btn edit" onclick="showToast('Tasdiqlandi!')">Tasdiqlash</button><button class="admin-action-btn del" onclick="showToast('O\'chirildi!')">O'chirish</button></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SOZLAMALAR -->
+      <div class="admin-page" id="page-settings">
+        <div class="admin-card">
+          <div class="admin-card-head"><div class="admin-card-title">Sayt sozlamalari</div></div>
+          <div class="admin-form-grid">
+            <div class="admin-form-group"><label class="admin-form-label">Sayt nomi</label><input class="admin-form-input" value="SENSORIKA"/></div>
+            <div class="admin-form-group"><label class="admin-form-label">Telefon</label><input class="admin-form-input" value="+998788884444"/></div>
+            <div class="admin-form-group"><label class="admin-form-label">Email</label><input class="admin-form-input" value="info@sensorika.uz"/></div>
+            <div class="admin-form-group"><label class="admin-form-label">Manzil</label><input class="admin-form-input" value="Toshkent shahri, NestOne, 2-qavat"/></div>
+            <div class="admin-form-group full"><label class="admin-form-label">Tavsif</label><textarea class="admin-form-input admin-form-textarea">Sun'iy Intellekt Akademiyasi rasmiy sayti.</textarea></div>
+            <div class="admin-form-group"><label class="admin-form-label">Admin login</label><input class="admin-form-input" value="admin"/></div>
+            <div class="admin-form-group"><label class="admin-form-label">Admin parol</label><input class="admin-form-input" type="password" value="admin123"/></div>
+          </div>
+          <button class="admin-save-btn" onclick="showToast('Sozlamalar saqlandi!')">Saqlash</button>
+        </div>
+      </div>
+
+      <!-- SEO -->
+      <div class="admin-page" id="page-seo">
+        <div class="admin-card">
+          <div class="admin-card-head"><div class="admin-card-title">SEO Sozlamalari</div></div>
+          <div class="admin-form-grid">
+            <div class="admin-form-group full"><label class="admin-form-label">Meta sarlavha</label><input class="admin-form-input" value="SENSORIKA - Sun'iy intellekt online akademiyasi"/></div>
+            <div class="admin-form-group full"><label class="admin-form-label">Meta tavsif</label><textarea class="admin-form-input admin-form-textarea">O'zbekistonda #1 Sun'iy Intellekt akademiyasi.</textarea></div>
+            <div class="admin-form-group full"><label class="admin-form-label">Meta kalit so'zlar</label><input class="admin-form-input" value="sensorika, ChatGPT, neyrotarmoqlar, AI kurslar"/></div>
+            <div class="admin-form-group"><label class="admin-form-label">Google Analytics ID</label><input class="admin-form-input" placeholder="G-XXXXXXXXXX"/></div>
+            <div class="admin-form-group"><label class="admin-form-label">Robots.txt</label><input class="admin-form-input" value="index, follow"/></div>
+          </div>
+          <button class="admin-save-btn" onclick="showToast('SEO saqlandi!')">Saqlash</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 <!-- ====== LOGIN MODAL ====== -->
 <div id="loginModal" class="modal-overlay" onclick="closeModalOut(event)">
   <div class="modal-box" style="position:relative;">
@@ -1682,6 +2076,62 @@ const statsObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.3 });
 const statsEl = document.querySelector('.stats-inner');
 if (statsEl) statsObserver.observe(statsEl);
+const ADMIN_USER = 'admin';
+const ADMIN_PASS = 'admin123';
+
+function openAdminLogin() {
+  document.getElementById('adminLoginOverlay').classList.add('open');
+  setTimeout(() => document.getElementById('adminUser').focus(), 100);
+}
+function closeAdminLogin() {
+  document.getElementById('adminLoginOverlay').classList.remove('open');
+  document.getElementById('adminErr').classList.remove('show');
+  document.getElementById('adminUser').value = '';
+  document.getElementById('adminPass').value = '';
+}
+function closeAdminLoginOut(e) {
+  if (e.target === document.getElementById('adminLoginOverlay')) closeAdminLogin();
+}
+function doAdminLogin() {
+  const u = document.getElementById('adminUser').value.trim();
+  const p = document.getElementById('adminPass').value;
+  if (u === ADMIN_USER && p === ADMIN_PASS) {
+    closeAdminLogin();
+    document.getElementById('adminPanel').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.getElementById('adminErr').classList.add('show');
+    document.getElementById('adminPass').value = '';
+    document.getElementById('adminPass').focus();
+  }
+}
+function closeAdminPanel() {
+  document.getElementById('adminPanel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function adminLogout() { closeAdminPanel(); }
+
+const pageTitles = {
+  dashboard:'Dashboard', students:"O'quvchilar", courses:'Kurslar',
+  messages:'Xabarlar', news:'Yangiliklar', team:'Jamoa',
+  branches:'Filiallar', reviews:'Fikrlar', settings:'Sozlamalar', seo:'SEO'
+};
+function showPage(name, el) {
+  document.querySelectorAll('.admin-page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.admin-nav-item').forEach(i => i.classList.remove('active'));
+  if (el) el.classList.add('active');
+  document.getElementById('adminPageTitle').textContent = pageTitles[name] || name;
+}
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('adminToast');
+  document.getElementById('adminToastText').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
 </script>
 </body>
 </html>
