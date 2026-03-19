@@ -2347,6 +2347,371 @@ a{text-decoration:none;color:inherit;}
   <div class="footer-bottom">
     ©2009-2025 <a href="https://sensorika.academy/about.html">&nbsp;SENSORIKA&nbsp;</a>. Barcha huquqlar himoyalangan. Dastur patentlangan. Nusxa olish ta'qiqlangan.
   </div>
+   <div class="layout">
+ 
+  <!-- ══ SIDEBAR ══ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <img src="https://sensorika.academy/templates/academy/images/favicon.png" alt=""/>
+      <span>SENSORIKA</span>
+    </div>
+ 
+    <nav class="sidebar-nav">
+      <div class="sidebar-item active" onclick="toggleSub(this,'sub-lichno')">
+        <div class="sidebar-item-left">
+          <span class="material-icons">person</span> Lichnoye
+        </div>
+        <span class="material-icons arrow">chevron_right</span>
+      </div>
+      <div class="sidebar-sub open" id="sub-lichno">
+        <div class="sidebar-sub-item active" onclick="showTab('dashboard')">Bosh sahifa</div>
+        <div class="sidebar-sub-item" onclick="showTab('payments')">To'lovlar</div>
+        <div class="sidebar-sub-item" onclick="showTab('profile')">Profil</div>
+      </div>
+ 
+      <div class="sidebar-item" onclick="toggleSub(this,'sub-zanyatiya')">
+        <div class="sidebar-item-left">
+          <span class="material-icons">school</span> Darslar
+        </div>
+        <span class="material-icons arrow">chevron_right</span>
+      </div>
+      <div class="sidebar-sub" id="sub-zanyatiya">
+        <div class="sidebar-sub-item" onclick="showTab('schedule')">Jadval</div>
+        <div class="sidebar-sub-item" onclick="showTab('homework')">Uy vazifalari</div>
+        <div class="sidebar-sub-item" onclick="showTab('results')">Natijalar</div>
+      </div>
+ 
+      <div class="sidebar-item" onclick="toggleSub(this,'sub-material')">
+        <div class="sidebar-item-left">
+          <span class="material-icons">folder</span> Materiallarim
+        </div>
+        <span class="material-icons arrow">chevron_right</span>
+      </div>
+      <div class="sidebar-sub" id="sub-material">
+        <div class="sidebar-sub-item">Dars materiallari</div>
+        <div class="sidebar-sub-item">Sertifikatlar</div>
+      </div>
+    </nav>
+ 
+    <div class="sidebar-app">
+      <div class="sidebar-app-title">Ilovani yuklab oling!</div>
+      <div class="sidebar-app-btns">
+        <div class="app-btn" title="Android">
+          <span class="material-icons">android</span>
+        </div>
+        <div class="app-btn" title="iOS">
+          <span class="material-icons">apple</span>
+        </div>
+      </div>
+      <div class="sidebar-app-hint">Kirish uchun subdomen <strong>sensorika</strong> ni kiriting</div>
+    </div>
+  </aside>
+ 
+  <!-- ══ TOPBAR ══ -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <button class="topbar-icon-btn topbar-menu-btn" onclick="toggleSidebar()">
+        <span class="material-icons">menu</span>
+      </button>
+    </div>
+    <div class="topbar-right">
+      <button class="topbar-btn" onclick="showTab('payments')">
+        <span class="material-icons" style="font-size:17px;">school</span>
+        Maktabga murojaat
+      </button>
+      <button class="topbar-icon-btn">
+        <span class="material-icons">chat_bubble_outline</span>
+      </button>
+      <div class="topbar-user">
+        <div class="topbar-avatar">Ш</div>
+        <span class="topbar-user-name">Шамсиев Бехруз</span>
+        <span class="material-icons topbar-user-arrow">arrow_drop_down</span>
+      </div>
+    </div>
+  </header>
+ 
+  <!-- ══ MAIN ══ -->
+  <main class="main">
+    <div class="main-inner">
+ 
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab-btn active" onclick="showTab('dashboard',this)">🏠 Bosh sahifa</button>
+        <button class="tab-btn" onclick="showTab('schedule',this)">📅 Jadval</button>
+        <button class="tab-btn" onclick="showTab('homework',this)">📝 Vazifalar</button>
+        <button class="tab-btn" onclick="showTab('results',this)">📊 Natijalar</button>
+        <button class="tab-btn" onclick="showTab('payments',this)">💳 To'lovlar</button>
+      </div>
+ 
+      <!-- ══ DASHBOARD TAB ══ -->
+      <div class="tab-page active" id="tab-dashboard">
+ 
+        <!-- Balance -->
+        <div class="balance-row">
+          <div class="balance-amount">Balans: <span>507 692,31</span> so'm</div>
+          <div class="balance-links">
+            <span class="balance-link" onclick="showTab('payments')">Hisob va onlayn to'lov</span>
+            <span class="balance-link" onclick="showTab('payments')">Kirim va chiqimlar</span>
+          </div>
+        </div>
+ 
+        <!-- Notification -->
+        <div class="notif-banner">
+          <span class="material-icons">notifications_active</span>
+          <span>Dars 16:30 da boshlandi — Эгамов Н.М. "0-этаж" auditoriyasida &nbsp;<a href="#">(havola)</a></span>
+        </div>
+ 
+        <!-- Stats mini -->
+        <div class="stats-mini-grid">
+          <div class="stat-mini">
+            <div class="stat-mini-num">24</div>
+            <div class="stat-mini-label">Jami darslar</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-mini-num" style="color:#16a34a;">18</div>
+            <div class="stat-mini-label">Tashrif buyurilgan</div>
+          </div>
+          <div class="stat-mini">
+            <div class="stat-mini-num" style="color:#ef4444;">3</div>
+            <div class="stat-mini-label">O'tkazib yuborilgan</div>
+          </div>
+        </div>
+ 
+        <!-- Main content row -->
+        <div class="content-row">
+          <div class="content-main">
+ 
+            <!-- Yaqin darslar -->
+            <div class="section-card">
+              <div class="section-head">
+                <span class="material-icons">event</span>
+                <span class="section-head-title">Yaqin darslar</span>
+              </div>
+              <table class="schedule-table">
+                <thead>
+                  <tr>
+                    <th>Sana</th>
+                    <th>Uy vazifasi</th>
+                    <th>Guruh / O'qituvchilar</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="schedule-date">19.03</span></td>
+                    <td>—</td>
+                    <td>
+                      <div class="schedule-group">Sensorika Education, Audit. 0-etaj <a href="#" class="schedule-link">(havola)</a></div>
+                      <div class="schedule-room">Guruh Frontend-56/16:30/18:30(S.P.SH)</div>
+                      <div class="schedule-teacher">Эгамов Нурмухаммад Мурод Угли</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span class="schedule-date">21.03</span></td>
+                    <td>—</td>
+                    <td>
+                      <div class="schedule-group">Sensorika Education, Audit. 0-etaj <a href="#" class="schedule-link">(havola)</a></div>
+                      <div class="schedule-room">Guruh Frontend-56/16:30/18:30(S.P.SH)</div>
+                      <div class="schedule-teacher">Эгамов Нурмухаммад Мурод Угли</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span class="schedule-date">24.03</span></td>
+                    <td>—</td>
+                    <td>
+                      <div class="schedule-group">Sensorika Education, Audit. 0-etaj <a href="#" class="schedule-link">(havola)</a></div>
+                      <div class="schedule-room">Guruh Frontend-56/16:30/18:30(S.P.SH)</div>
+                      <div class="schedule-teacher">Эгамов Нурмухаммад Мурод Угли</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><span class="schedule-date">26.03</span></td>
+                    <td>—</td>
+                    <td>
+                      <div class="schedule-group">Sensorika Education, Audit. 0-etaj <a href="#" class="schedule-link">(havola)</a></div>
+                      <div class="schedule-room">Guruh Frontend-56/16:30/18:30(S.P.SH)</div>
+                      <div class="schedule-teacher">Эгамов Нурмухаммад Мурод Угли</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="schedule-footer">
+                <a onclick="showTab('schedule')">Jadval</a>
+                <span class="schedule-footer-sep">•</span>
+                <a onclick="showTab('homework')">Uy vazifalari arxivi</a>
+              </div>
+            </div>
+ 
+            <!-- Natijalar (chart) -->
+            <div class="results-section">
+              <div class="results-head">
+                <span class="material-icons">bar_chart</span>
+                <span class="results-head-title">Natijalar</span>
+              </div>
+              <div class="results-chart-wrap">
+                <div style="display:flex;gap:4px;align-items:flex-end;height:240px;padding-bottom:28px;position:relative;">
+                  <div style="display:flex;flex-direction:column;justify-content:space-between;height:200px;margin-right:10px;flex-shrink:0;padding-bottom:0;">
+                    <span style="font-size:11px;color:#9aa5be;">125%</span>
+                    <span style="font-size:11px;color:#9aa5be;">100%</span>
+                    <span style="font-size:11px;color:#9aa5be;">75%</span>
+                    <span style="font-size:11px;color:#9aa5be;">50%</span>
+                    <span style="font-size:11px;color:#9aa5be;">25%</span>
+                    <span style="font-size:11px;color:#9aa5be;">0%</span>
+                  </div>
+                  <!-- bars -->
+                  <div id="chartBars" style="display:flex;gap:6px;align-items:flex-end;flex:1;height:200px;border-bottom:1px solid #e8edf5;position:relative;"></div>
+                </div>
+              </div>
+            </div>
+ 
+          </div><!-- /content-main -->
+ 
+          <!-- Calendar -->
+          <div class="content-aside">
+            <div class="calendar-card">
+              <div class="calendar-head">
+                <span class="material-icons">calendar_month</span>
+                <span class="calendar-head-title">Darslar jadvali</span>
+              </div>
+              <div class="calendar-inner">
+                <div class="calendar-nav">
+                  <button class="cal-nav-btn" onclick="changeMonth(-1)">«</button>
+                  <span class="cal-month" id="calMonthLabel">Mart 2026</span>
+                  <button class="cal-nav-btn" onclick="changeMonth(1)">»</button>
+                </div>
+                <div class="cal-grid" id="calGrid"></div>
+                <div class="cal-legend">
+                  <div class="cal-legend-item"><div class="cal-dot future"></div> — kelajak</div>
+                  <div class="cal-legend-item"><div class="cal-dot visited"></div> — tashrif buyurildi</div>
+                  <div class="cal-legend-item"><div class="cal-dot missed"></div> — o'tkazib yuborildi</div>
+                </div>
+              </div>
+            </div>
+          </div>
+ 
+        </div><!-- /content-row -->
+      </div><!-- /tab-dashboard -->
+ 
+      <!-- ══ JADVAL TAB ══ -->
+      <div class="tab-page" id="tab-schedule">
+        <div class="section-card">
+          <div class="section-head">
+            <span class="material-icons">calendar_today</span>
+            <span class="section-head-title">To'liq dars jadvali</span>
+          </div>
+          <table class="schedule-table">
+            <thead>
+              <tr><th>Sana</th><th>Vaqt</th><th>Xona</th><th>Guruh</th><th>O'qituvchi</th><th>Holat</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>17.03</td><td>16:30–18:30</td><td>0-etaj</td><td>Frontend-56</td><td>Эгамов Н.М.</td><td><span style="color:#16a34a;font-weight:700;">✓ Tashrif</span></td></tr>
+              <tr><td>19.03</td><td>16:30–18:30</td><td>0-etaj</td><td>Frontend-56</td><td>Эгамов Н.М.</td><td><span style="color:#2dd4bf;font-weight:700;">◉ Kelajak</span></td></tr>
+              <tr><td>21.03</td><td>16:30–18:30</td><td>0-etaj</td><td>Frontend-56</td><td>Эгамов Н.М.</td><td><span style="color:#2dd4bf;font-weight:700;">◉ Kelajak</span></td></tr>
+              <tr><td>24.03</td><td>16:30–18:30</td><td>0-etaj</td><td>Frontend-56</td><td>Эгамов Н.М.</td><td><span style="color:#2dd4bf;font-weight:700;">◉ Kelajak</span></td></tr>
+              <tr><td>26.03</td><td>16:30–18:30</td><td>0-etaj</td><td>Frontend-56</td><td>Эгамов Н.М.</td><td><span style="color:#2dd4bf;font-weight:700;">◉ Kelajak</span></td></tr>
+              <tr><td>28.03</td><td>16:30–18:30</td><td>0-etaj</td><td>Frontend-56</td><td>Эгамов Н.М.</td><td><span style="color:#ef4444;font-weight:700;">✕ O'tkazib</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+ 
+      <!-- ══ VAZIFALAR TAB ══ -->
+      <div class="tab-page" id="tab-homework">
+        <div class="section-card">
+          <div class="section-head">
+            <span class="material-icons">assignment</span>
+            <span class="section-head-title">Uy vazifalari</span>
+          </div>
+          <div class="hw-list">
+            <div class="hw-item">
+              <div class="hw-status done"></div>
+              <div>
+                <div class="hw-subject">HTML/CSS — Flexbox amaliyoti</div>
+                <div class="hw-date">Berildi: 12.03 • Topshirish: 14.03</div>
+              </div>
+              <div class="hw-badge done">Bajarildi</div>
+            </div>
+            <div class="hw-item">
+              <div class="hw-status done"></div>
+              <div>
+                <div class="hw-subject">JavaScript — DOM bilan ishlash</div>
+                <div class="hw-date">Berildi: 14.03 • Topshirish: 17.03</div>
+              </div>
+              <div class="hw-badge done">Bajarildi</div>
+            </div>
+            <div class="hw-item">
+              <div class="hw-status pending"></div>
+              <div>
+                <div class="hw-subject">React — Komponentlar yaratish</div>
+                <div class="hw-date">Berildi: 17.03 • Topshirish: 19.03</div>
+              </div>
+              <div class="hw-badge pending">Kutilmoqda</div>
+            </div>
+            <div class="hw-item">
+              <div class="hw-status missed"></div>
+              <div>
+                <div class="hw-subject">CSS Grid — loyiha</div>
+                <div class="hw-date">Berildi: 05.03 • Topshirish: 08.03</div>
+              </div>
+              <div class="hw-badge missed">Topshirilmadi</div>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- ══ NATIJALAR TAB ══ -->
+      <div class="tab-page" id="tab-results">
+        <div class="results-section" style="margin-bottom:0;">
+          <div class="results-head">
+            <span class="material-icons">bar_chart</span>
+            <span class="results-head-title">Barcha natijalar</span>
+          </div>
+          <div class="results-chart-wrap">
+            <div style="display:flex;gap:4px;align-items:flex-end;height:280px;padding-bottom:28px;position:relative;">
+              <div style="display:flex;flex-direction:column;justify-content:space-between;height:240px;margin-right:10px;flex-shrink:0;">
+                <span style="font-size:11px;color:#9aa5be;">125%</span>
+                <span style="font-size:11px;color:#9aa5be;">100%</span>
+                <span style="font-size:11px;color:#9aa5be;">75%</span>
+                <span style="font-size:11px;color:#9aa5be;">50%</span>
+                <span style="font-size:11px;color:#9aa5be;">25%</span>
+                <span style="font-size:11px;color:#9aa5be;">0%</span>
+              </div>
+              <div id="chartBars2" style="display:flex;gap:6px;align-items:flex-end;flex:1;height:240px;border-bottom:1px solid #e8edf5;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+ 
+      <!-- ══ TO'LOVLAR TAB ══ -->
+      <div class="tab-page" id="tab-payments">
+        <div class="balance-row" style="margin-bottom:20px;">
+          <div class="balance-amount">Balans: <span>507 692,31</span> so'm</div>
+          <button style="padding:9px 22px;background:linear-gradient(135deg,#1a78e0,#4da8ff);color:#fff;border:none;border-radius:9px;font-size:13.5px;font-weight:700;cursor:pointer;font-family:'Exo 2',sans-serif;">
+            Onlayn to'lov
+          </button>
+        </div>
+        <div class="section-card">
+          <div class="section-head">
+            <span class="material-icons">receipt_long</span>
+            <span class="section-head-title">To'lovlar tarixi</span>
+          </div>
+          <table class="pay-table">
+            <thead>
+              <tr><th>Sana</th><th>Tavsif</th><th>Summa</th><th>Balans</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>15.03.2026</td><td>Frontend-56 kursi uchun to'lov</td><td class="pay-amount-minus">–300 000 so'm</td><td>507 692 so'm</td></tr>
+              <tr><td>01.03.2026</td><td>Hisob to'ldirish</td><td class="pay-amount-plus">+800 000 so'm</td><td>807 692 so'm</td></tr>
+              <tr><td>15.02.2026</td><td>Frontend-56 kursi uchun to'lov</td><td class="pay-amount-minus">–300 000 so'm</td><td>7 692 so'm</td></tr>
+              <tr><td>01.02.2026</td><td>Hisob to'ldirish</td><td class="pay-amount-plus">+600 000 so'm</td><td>307 692 so'm</td></tr>
+              <tr><td>15.01.2026</td><td>Frontend-56 kursi uchun to'lov</td><td class="pay-amount-minus">–300 000 so'm</td><td>7 692 so'm</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+ 
+    </div><!-- /main-inner -->
+  </main>
+</div><!-- /layout -->
 </footer>
 
 <script>
