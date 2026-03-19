@@ -2132,6 +2132,116 @@ function showToast(msg) {
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
 }
+   /* ── TABS ── */
+const tabBtns = document.querySelectorAll('.tab-btn');
+function showTab(name, btn) {
+  document.querySelectorAll('.tab-page').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  if (btn) {
+    tabBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+}
+
+/* ── SIDEBAR SUB ── */
+function toggleSub(item, subId) {
+  const sub = document.getElementById(subId);
+  const isOpen = sub.classList.contains('open');
+  document.querySelectorAll('.sidebar-sub').forEach(s => s.classList.remove('open'));
+  document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('open','active'));
+  if (!isOpen) { sub.classList.add('open'); item.classList.add('open','active'); }
+}
+
+/* ── SIDEBAR MOBILE ── */
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+/* ── CALENDAR ── */
+const calData = {
+  visited: [3,10,17,24],
+  future:  [19,21,26],
+  missed:  [7,14,28]
+};
+let calYear = 2026, calMonth = 2; // 0-based: 2 = March
+
+const monthNames = ['Yanvar','Fevral','Mart','Aprel','May','Iyun','Iyul','Avgust','Sentabr','Oktabr','Noyabr','Dekabr'];
+const dowNames   = ['Пн','Вт','Ср','Чт','Пт','Сб','Вс'];
+
+function renderCal() {
+  document.getElementById('calMonthLabel').textContent = monthNames[calMonth] + ' ' + calYear;
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+  dowNames.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'cal-dow'; el.textContent = d;
+    grid.appendChild(el);
+  });
+  const first = new Date(calYear, calMonth, 1);
+  let startDow = first.getDay(); // 0=Sun
+  startDow = startDow === 0 ? 6 : startDow - 1; // Mon=0
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+  const daysInPrev  = new Date(calYear, calMonth, 0).getDate();
+  const today = new Date();
+  let cells = [];
+  for (let i = startDow - 1; i >= 0; i--) cells.push({ day: daysInPrev - i, cur: false });
+  for (let d = 1; d <= daysInMonth; d++) cells.push({ day: d, cur: true });
+  while (cells.length % 7 !== 0) { cells.push({ day: cells.length - daysInMonth - startDow + 1, cur: false }); }
+  cells.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'cal-day';
+    el.textContent = c.day;
+    if (!c.cur) { el.classList.add('other-month'); }
+    else {
+      const isToday = calYear === today.getFullYear() && calMonth === today.getMonth() && c.day === today.getDate();
+      if (isToday) el.classList.add('today');
+      else if (calData.visited.includes(c.day)) el.classList.add('visited');
+      else if (calData.future.includes(c.day))  el.classList.add('future');
+      else if (calData.missed.includes(c.day))  el.classList.add('missed');
+    }
+    grid.appendChild(el);
+  });
+}
+function changeMonth(dir) { calMonth += dir; if(calMonth<0){calMonth=11;calYear--;}else if(calMonth>11){calMonth=0;calYear++;} renderCal(); }
+renderCal();
+
+/* ── CHART ── */
+const chartData = [
+  {val:90, color:'#6d28d9'}, {val:75, color:'#6d28d9'}, {val:75, color:'#6d28d9'},
+  {val:70, color:'#6d28d9'}, {val:80, color:'#3b82f6'}, {val:80, color:'#3b82f6'},
+  {val:100,color:'#3b82f6'}, {val:60, color:'#3b82f6'}, {val:55, color:'#3b82f6'},
+  {val:80, color:'#14b8a6'}, {val:100,color:'#14b8a6'}, {val:100,color:'#14b8a6'},
+  {val:0,  color:'#e0e6ef'}, {val:0,  color:'#e0e6ef'}, {val:0,  color:'#e0e6ef'},
+];
+
+function renderChart(containerId) {
+  const wrap = document.getElementById(containerId);
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  chartData.forEach((d, i) => {
+    const group = document.createElement('div');
+    group.style.cssText = 'display:flex;flex-direction:column;align-items:center;flex:1;height:100%;justify-content:flex-end;position:relative;';
+    const bar = document.createElement('div');
+    const pct = Math.max(d.val, 2);
+    bar.style.cssText = `width:100%;height:${pct}%;background:${d.color};border-radius:4px 4px 0 0;position:relative;cursor:pointer;transition:opacity .2s;`;
+    bar.onmouseenter = () => bar.style.opacity = '.8';
+    bar.onmouseleave = () => bar.style.opacity = '1';
+    if (d.val > 0) {
+      const label = document.createElement('div');
+      label.style.cssText = 'position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:11px;font-weight:700;color:#3a4a6b;white-space:nowrap;';
+      label.textContent = d.val + '%';
+      bar.appendChild(label);
+    }
+    const xLabel = document.createElement('div');
+    xLabel.style.cssText = 'font-size:10px;color:#9aa5be;margin-top:6px;white-space:nowrap;';
+    xLabel.textContent = i + 1;
+    group.appendChild(bar);
+    group.appendChild(xLabel);
+    wrap.appendChild(group);
+  });
+}
+renderChart('chartBars');
+renderChart('chartBars2');
 </script>
 </body>
 </html>
